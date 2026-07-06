@@ -1,0 +1,369 @@
+schemaVersion: "1.0"
+id: tr-afb6cd39-ef89-4233-bd4a-ea54eb583bd7
+key: TR-009
+title: Test Run 2026-05-12
+status: in-progress
+environment:
+  name: default
+startedAt: "2026-05-12T18:42:52.108Z"
+results:
+  - testCaseId: 4b5c6d7e-8f9a-40b1-f012-567890123456
+    testCaseKey: TC-053
+    testCaseTitle: POS Mobile — Stock Validation at Checkout
+    testCaseFilePath: test-cases/pos/pos-stock-validation-checkout.testcase.yml
+    scenarioTitle: Successful purchase with sufficient stock completes all records
+    scenarioIndex: 0
+    status: not-run
+    stepResults:
+      - order: 1
+        status: passed
+        actual: ""
+        phase: given
+        text: the Shop Item 'Test Item Stock Bug' has Stock = 10
+        attachments:
+          - name: 1778871231342-step-1.png
+            path: attachments/TR-009/1778871231342-step-1.png
+            mimeType: image/png
+            size: 176886
+      - order: 2
+        status: passed
+        actual: ""
+        phase: given
+        text: the POS Mobile app shows the item with stock = 10
+        attachments:
+          - name: 1778874452850-step-2-img-0330.png
+            path: attachments/TR-009/1778874452850-step-2-img-0330.png
+            mimeType: image/png
+            size: 293529
+      - order: 3
+        status: passed
+        actual: ""
+        phase: when
+        text: the user adds 5 units of the item to the cart
+        attachments:
+          - name: 1778874520642-step-3-captura-de-pantalla-2026-05-15-a-la-s-2.48.04-p.m..png
+            path: attachments/TR-009/1778874520642-step-3-captura-de-pantalla-2026-05-15-a-la-s-2.48.04-p.m..png
+            mimeType: image/png
+            size: 533664
+      - order: 4
+        status: passed
+        actual: ""
+        phase: when
+        text: the user proceeds to the payment screen and completes the transaction
+        attachments:
+          - name: 1778874676245-step-4-captura-de-pantalla-2026-05-15-a-la-s-2.50.24-p.m..png
+            path: attachments/TR-009/1778874676245-step-4-captura-de-pantalla-2026-05-15-a-la-s-2.50.24-p.m..png
+            mimeType: image/png
+            size: 282963
+      - order: 5
+        status: passed
+        actual: ""
+        phase: then
+        text: the transaction completes successfully
+        attachments:
+          - name: 1778874795673-step-5-captura-de-pantalla-2026-05-15-a-la-s-2.52.55-p.m..png
+            path: attachments/TR-009/1778874795673-step-5-captura-de-pantalla-2026-05-15-a-la-s-2.52.55-p.m..png
+            mimeType: image/png
+            size: 891687
+      - order: 6
+        status: passed
+        actual: ""
+        phase: then
+        text: a POS Purchase record is created with status 'Completed'
+        attachments:
+          - name: 1778874837845-step-6.png
+            path: attachments/TR-009/1778874837845-step-6.png
+            mimeType: image/png
+            size: 181914
+      - order: 7
+        status: passed
+        actual: ""
+        phase: then
+        text: a Charge record is created with the correct amount (not 0)
+        attachments:
+          - name: 1778874867198-step-7.png
+            path: attachments/TR-009/1778874867198-step-7.png
+            mimeType: image/png
+            size: 150864
+      - order: 8
+        status: passed
+        actual: ""
+        phase: then
+        text: Charge Items are created for the purchased units
+        attachments:
+          - name: 1778874933689-step-8.png
+            path: attachments/TR-009/1778874933689-step-8.png
+            mimeType: image/png
+            size: 102144
+      - order: 9
+        status: not-run
+        actual: ""
+        phase: then
+        text: Journals are created for the transaction
+        attachments: []
+      - order: 10
+        status: passed
+        actual: ""
+        phase: then
+        text: the Shop Item stock in Salesforce is reduced to 5
+        attachments:
+          - name: 1778875064146-step-10.png
+            path: attachments/TR-009/1778875064146-step-10.png
+            mimeType: image/png
+            size: 179250
+    notes: ""
+    attachments: []
+    defects: []
+  - testCaseId: 4b5c6d7e-8f9a-40b1-f012-567890123456
+    testCaseKey: TC-053
+    testCaseTitle: POS Mobile — Stock Validation at Checkout
+    testCaseFilePath: test-cases/pos/pos-stock-validation-checkout.testcase.yml
+    scenarioTitle: UI reflects updated stock immediately after a completed purchase
+    scenarioIndex: 1
+    status: passed
+    stepResults:
+      - order: 1
+        status: passed
+        actual: ""
+        phase: given
+        text: the Shop Item 'Test Item Stock Bug' has Stock = 10
+        attachments:
+          - name: 1778875685954-step-1.png
+            path: attachments/TR-009/1778875685954-step-1.png
+            mimeType: image/png
+            size: 178362
+      - order: 2
+        status: passed
+        actual: ""
+        phase: given
+        text: the POS Mobile app shows the item with stock = 10
+        attachments:
+          - name: 1778875885700-step-2-captura-de-pantalla-2026-05-15-a-la-s-3.11.02-p.m..png
+            path: attachments/TR-009/1778875885700-step-2-captura-de-pantalla-2026-05-15-a-la-s-3.11.02-p.m..png
+            mimeType: image/png
+            size: 467613
+      - order: 3
+        status: passed
+        actual: ""
+        phase: when
+        text: the user purchases 10 units and the transaction completes successfully
+        attachments:
+          - name: 1778876101897-step-3-img-0337.png
+            path: attachments/TR-009/1778876101897-step-3-img-0337.png
+            mimeType: image/png
+            size: 288819
+      - order: 4
+        status: passed
+        actual: ""
+        phase: when
+        text: the app automatically returns to the Shop Items list
+        attachments:
+          - name: 1778876162896-step-4-file-22-.png
+            path: attachments/TR-009/1778876162896-step-4-file-22-.png
+            mimeType: image/png
+            size: 796821
+      - order: 5
+        status: passed
+        actual: ""
+        phase: then
+        text: the UI displays stock = 0 for 'Test Item Stock Bug' without requiring a manual refresh
+        attachments: []
+      - order: 6
+        status: passed
+        actual: ""
+        phase: then
+        text: the item is shown as unavailable or not selectable in the POS
+        attachments:
+          - name: 1778876192613-step-6-file-23-.png
+            path: attachments/TR-009/1778876192613-step-6-file-23-.png
+            mimeType: image/png
+            size: 824070
+    notes: ""
+    attachments: []
+    defects: []
+    executedAt: "2026-05-15T20:16:35.080Z"
+  - testCaseId: 4b5c6d7e-8f9a-40b1-f012-567890123456
+    testCaseKey: TC-053
+    testCaseTitle: POS Mobile — Stock Validation at Checkout
+    testCaseFilePath: test-cases/pos/pos-stock-validation-checkout.testcase.yml
+    scenarioTitle: Second purchase is blocked when real stock is 0 but UI is stale
+    scenarioIndex: 2
+    status: not-run
+    stepResults:
+      - order: 1
+        status: not-run
+        actual: ""
+        phase: given
+        text: the Shop Item 'Test Item Stock Bug' has Stock = 10
+        attachments: []
+      - order: 2
+        status: not-run
+        actual: ""
+        phase: given
+        text: the user has already purchased all 10 units (stock is now 0 in Salesforce)
+        attachments: []
+      - order: 3
+        status: not-run
+        actual: ""
+        phase: given
+        text: the POS Mobile UI still shows stock = 10 (stale, not refreshed)
+        attachments: []
+      - order: 4
+        status: not-run
+        actual: ""
+        phase: when
+        text: the user attempts to add 10 units to the cart and proceeds to the payment screen
+        attachments: []
+      - order: 5
+        status: not-run
+        actual: ""
+        phase: then
+        text: the system revalidates stock before executing payment
+        attachments: []
+      - order: 6
+        status: not-run
+        actual: ""
+        phase: then
+        text: checkout is BLOCKED with an 'Out of Stock' or equivalent error message
+        attachments: []
+      - order: 7
+        status: not-run
+        actual: ""
+        phase: then
+        text: no payment is sent to Adyen
+        attachments: []
+      - order: 8
+        status: not-run
+        actual: ""
+        phase: then
+        text: no POS Purchase record is created
+        attachments: []
+      - order: 9
+        status: not-run
+        actual: ""
+        phase: then
+        text: no Charge record is created
+        attachments: []
+    notes: ""
+    attachments: []
+    defects: []
+  - testCaseId: 4b5c6d7e-8f9a-40b1-f012-567890123456
+    testCaseKey: TC-053
+    testCaseTitle: POS Mobile — Stock Validation at Checkout
+    testCaseFilePath: test-cases/pos/pos-stock-validation-checkout.testcase.yml
+    scenarioTitle: Payment is NOT captured when stock validation fails
+    scenarioIndex: 3
+    status: not-run
+    stepResults:
+      - order: 1
+        status: not-run
+        actual: ""
+        phase: given
+        text: the Shop Item 'Test Item Stock Bug' has Stock = 0 in Salesforce
+        attachments: []
+      - order: 2
+        status: not-run
+        actual: ""
+        phase: given
+        text: the POS Mobile cart contains 10 units of the item
+        attachments: []
+      - order: 3
+        status: not-run
+        actual: ""
+        phase: when
+        text: the user reaches the payment screen and attempts to complete payment
+        attachments: []
+      - order: 4
+        status: not-run
+        actual: ""
+        phase: then
+        text: stock is validated BEFORE the payment request is sent to Adyen
+        attachments: []
+      - order: 5
+        status: not-run
+        actual: ""
+        phase: then
+        text: Adyen does NOT receive a payment authorization request
+        attachments: []
+      - order: 6
+        status: not-run
+        actual: ""
+        phase: then
+        text: no payment is captured
+        attachments: []
+      - order: 7
+        status: not-run
+        actual: ""
+        phase: then
+        text: the user sees an error indicating the item is out of stock
+        attachments: []
+    notes: ""
+    attachments: []
+    defects: []
+  - testCaseId: 4b5c6d7e-8f9a-40b1-f012-567890123456
+    testCaseKey: TC-053
+    testCaseTitle: POS Mobile — Stock Validation at Checkout
+    testCaseFilePath: test-cases/pos/pos-stock-validation-checkout.testcase.yml
+    scenarioTitle: No partial financial records are created when stock validation fails
+    scenarioIndex: 4
+    status: not-run
+    stepResults:
+      - order: 1
+        status: not-run
+        actual: ""
+        phase: given
+        text: a checkout attempt fails due to insufficient stock (stock = 0)
+        attachments: []
+      - order: 2
+        status: not-run
+        actual: ""
+        phase: when
+        text: the system processes the failed transaction
+        attachments: []
+      - order: 3
+        status: not-run
+        actual: ""
+        phase: then
+        text: no Charge record with Amount = 0 is created
+        attachments: []
+      - order: 4
+        status: not-run
+        actual: ""
+        phase: then
+        text: no POS Purchase record with status 'Pending' is left incomplete
+        attachments: []
+      - order: 5
+        status: not-run
+        actual: ""
+        phase: then
+        text: no orphaned Charge Items are created
+        attachments: []
+      - order: 6
+        status: not-run
+        actual: ""
+        phase: then
+        text: no orphaned Journal records are created
+        attachments: []
+      - order: 7
+        status: not-run
+        actual: ""
+        phase: then
+        text: the Salesforce backend remains in a consistent state
+        attachments: []
+    notes: ""
+    attachments: []
+    defects: []
+summary:
+  total: 5
+  passed: 1
+  failed: 0
+  blocked: 0
+  skipped: 0
+  notRun: 4
+  passRate: 20
+history: []
+metadata:
+  createdBy: testmanager
+  createdAt: "2026-05-12T18:33:16.489Z"
+  updatedBy: testmanager
+  updatedAt: "2026-05-15T20:16:43.948Z"
