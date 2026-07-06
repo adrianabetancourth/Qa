@@ -1,0 +1,11 @@
+schemaVersion: "1.0"
+
+project:
+  name: "Veevart Applications"
+  prefix: "TC"
+
+settings:
+  defaultPriority: medium
+  defaultType: functional
+  requireApproval: false
+  attachmentsMaxSizeMb: 5
