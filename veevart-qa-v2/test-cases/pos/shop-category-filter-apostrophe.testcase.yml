@@ -1,0 +1,101 @@
+schemaVersion: "1.0"
+
+id: "f3a7c2e1-84b6-4d09-a531-7e2f91b0c845"
+key: "TC-040"
+title: "Shop Category Filter with Apostrophe in Picklist API Name"
+description: |
+  Validates that the POS shop category filter works correctly when a category
+  name contains an apostrophe (e.g., "Women's Apparel"). Covers successful
+  filtering, regression for categories without apostrophes, the All category,
+  manually sanitized API names, and sidebar display accuracy.
+
+type: functional
+priority: high
+status: active
+
+preconditions:
+  - "The user is logged into the POS mobile application"
+  - "The Shop section is open"
+  - "Shop items with various Item Types are configured in the system"
+
+format: gherkin
+scenarios:
+  - title: "Category with apostrophe loads products successfully"
+    tags:
+      - happy-path
+      - apostrophe
+    given:
+      - "a shop item exists with Item Type 'Women's Apparel' and status Active"
+    when:
+      - "the user selects the 'Women's Apparel' category from the sidebar"
+    then:
+      - "the products from the 'Women's Apparel' category are displayed"
+      - "no error popup is shown"
+
+  - title: "Categories without apostrophe still work after the fix"
+    tags:
+      - regression
+      - happy-path
+    given:
+      - "shop items exist with Item Types 'Books' and 'Jewelry'"
+    when:
+      - "the user selects the 'Books' category from the sidebar"
+    then:
+      - "only Books items are displayed"
+      - "no error popup is shown"
+    when:
+      - "the user selects the 'Jewelry' category from the sidebar"
+    then:
+      - "only Jewelry items are displayed"
+      - "no error popup is shown"
+
+  - title: "All category is not affected by the apostrophe fix"
+    tags:
+      - regression
+      - happy-path
+    given:
+      - "shop items exist across multiple categories"
+    when:
+      - "the user selects the 'All' category from the sidebar"
+    then:
+      - "all active shop items are displayed regardless of category"
+      - "no error popup is shown"
+
+  - title: "Manually sanitized API Name (no apostrophe) still works"
+    tags:
+      - edge-case
+    given:
+      - "a shop item exists with Item Type API Name 'Womens Apparel' (no apostrophe)"
+    when:
+      - "the user selects that category from the sidebar"
+    then:
+      - "the products from that category are displayed"
+      - "no error popup is shown"
+
+  - title: "Category with apostrophe appears correctly in the sidebar"
+    tags:
+      - ui
+      - happy-path
+    given:
+      - "at least one shop item exists with Item Type 'Women's Apparel' and status Active"
+    when:
+      - "the user opens the Shop section"
+    then:
+      - "'Women's Apparel' is listed in the category sidebar"
+      - "the item count next to 'Women's Apparel' matches the number of active items in that category"
+
+tags:
+  - pos
+  - shop
+  - category-filter
+  - apostrophe
+  - picklist
+
+estimatedDuration: 15
+
+metadata:
+  createdBy: "veevart"
+  createdAt: "2026-04-21T00:00:00Z"
+  updatedBy: "veevart"
+  updatedAt: "2026-04-21T00:00:00Z"
+  version: 1

@@ -1,0 +1,125 @@
+schemaVersion: "1.0"
+
+id: "4b5c6d7e-8f9a-40b1-f012-567890123456"
+key: "TC-053"
+title: "POS Mobile — Stock Validation at Checkout"
+description: |
+  Regression and acceptance tests for SH-604.
+  POS Mobile was allowing checkout with stale stock values without
+  revalidating inventory at payment time, causing Adyen to capture
+  payment while Salesforce threw 'Out of Stock', leaving partial
+  records (Charge Amount=0, POS Purchase pending, no Charge Items
+  or Journals).
+
+type: regression
+priority: critical
+status: active
+
+preconditions:
+  - "POS Mobile app is accessible and the user is logged in"
+  - "Shop Items module is accessible in Salesforce"
+  - "Adyen payment integration is active in the test environment"
+  - "Shop Item 'Test Item Stock Bug' exists with Stock = 10"
+  - "Validation Rule 'Total_stock_validation' is active"
+
+format: gherkin
+scenarios:
+  - title: "Successful purchase with sufficient stock completes all records"
+    tags:
+      - happy-path
+      - smoke
+    given:
+      - "the Shop Item 'Test Item Stock Bug' has Stock = 10"
+      - "the POS Mobile app shows the item with stock = 10"
+    when:
+      - "the user adds 5 units of the item to the cart"
+      - "the user proceeds to the payment screen and completes the transaction"
+    then:
+      - "the transaction completes successfully"
+      - "a POS Purchase record is created with status 'Completed'"
+      - "a Charge record is created with the correct amount (not 0)"
+      - "Charge Items are created for the purchased units"
+      - "Journals are created for the transaction"
+      - "the Shop Item stock in Salesforce is reduced to 5"
+
+  - title: "UI reflects updated stock immediately after a completed purchase"
+    tags:
+      - regression
+      - ui-sync
+      - sh-604
+    given:
+      - "the Shop Item 'Test Item Stock Bug' has Stock = 10"
+      - "the POS Mobile app shows the item with stock = 10"
+    when:
+      - "the user purchases 10 units and the transaction completes successfully"
+      - "the app automatically returns to the Shop Items list"
+    then:
+      - "the UI displays stock = 0 for 'Test Item Stock Bug' without requiring a manual refresh"
+      - "the item is shown as unavailable or not selectable in the POS"
+
+  - title: "Second purchase is blocked when real stock is 0 but UI is stale"
+    tags:
+      - regression
+      - negative
+      - sh-604
+    given:
+      - "the Shop Item 'Test Item Stock Bug' has Stock = 10"
+      - "the user has already purchased all 10 units (stock is now 0 in Salesforce)"
+      - "the POS Mobile UI still shows stock = 10 (stale, not refreshed)"
+    when:
+      - "the user attempts to add 10 units to the cart and proceeds to the payment screen"
+    then:
+      - "the system revalidates stock before executing payment"
+      - "checkout is BLOCKED with an 'Out of Stock' or equivalent error message"
+      - "no payment is sent to Adyen"
+      - "no POS Purchase record is created"
+      - "no Charge record is created"
+
+  - title: "Payment is NOT captured when stock validation fails"
+    tags:
+      - negative
+      - payment
+      - sh-604
+    given:
+      - "the Shop Item 'Test Item Stock Bug' has Stock = 0 in Salesforce"
+      - "the POS Mobile cart contains 10 units of the item"
+    when:
+      - "the user reaches the payment screen and attempts to complete payment"
+    then:
+      - "stock is validated BEFORE the payment request is sent to Adyen"
+      - "Adyen does NOT receive a payment authorization request"
+      - "no payment is captured"
+      - "the user sees an error indicating the item is out of stock"
+
+  - title: "No partial financial records are created when stock validation fails"
+    tags:
+      - negative
+      - data-integrity
+      - sh-604
+    given:
+      - "a checkout attempt fails due to insufficient stock (stock = 0)"
+    when:
+      - "the system processes the failed transaction"
+    then:
+      - "no Charge record with Amount = 0 is created"
+      - "no POS Purchase record with status 'Pending' is left incomplete"
+      - "no orphaned Charge Items are created"
+      - "no orphaned Journal records are created"
+      - "the Salesforce backend remains in a consistent state"
+
+tags:
+  - pos
+  - pos-mobile
+  - stock
+  - checkout
+  - payment
+  - sh-604
+
+estimatedDuration: 30
+
+metadata:
+  createdBy: "veevart"
+  createdAt: "2026-05-12T00:00:00Z"
+  updatedBy: "veevart"
+  updatedAt: "2026-05-12T00:00:00Z"
+  version: 1
